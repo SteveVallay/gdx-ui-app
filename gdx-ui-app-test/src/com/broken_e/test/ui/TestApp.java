@@ -5,31 +5,33 @@ import com.broken_e.ui.SkinStyler;
 import com.broken_e.ui.UiApp;
 
 public class TestApp extends UiApp {
+	
+	private GameScreen gameScreen;
 
 	@Override
 	protected String atlasPath() {
-		// TODO Auto-generated method stub
-		return null;
+		return "data/tex.atlas";
 	}
 
 	@Override
 	protected String skinPath() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	protected SkinStyler getSkinStyler() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	protected BaseScreen getFirstScreen() {
-		// TODO Auto-generated method stub
-		return null;
+		return new MainScreen(this);
 	}
 
-
+	public GameScreen getGameScreen(){
+		if (gameScreen == null)
+			gameScreen = new GameScreen(this);
+		return gameScreen;
+	}
 
 }

@@ -3,7 +3,7 @@ package com.broken_e.utils;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.IntArray;
 
-/** basically an ordered ObjectIntMap */
+/** basically an ordered ObjectIntMap, useful for storing stats and scores */
 public class KeyValue<T> {
 	private Array<T> keys = new Array<T>();
 	private IntArray values = new IntArray();
