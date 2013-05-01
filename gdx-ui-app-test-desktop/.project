@@ -18,7 +18,7 @@
 		<link>
 			<name>assets</name>
 			<type>2</type>
-			<locationURI>WORKSPACE_LOC/git/gdx-ui-app-test-android/assets</locationURI>
+			<locationURI>PARENT-1-PROJECT_LOC/gdx-ui-app-test-android/assets</locationURI>
 		</link>
 	</linkedResources>
 </projectDescription>
