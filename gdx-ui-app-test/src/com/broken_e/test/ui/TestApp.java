@@ -20,7 +20,7 @@ public class TestApp extends UiApp {
 
 	@Override
 	protected SkinStyler getSkinStyler() {
-		return null;
+		return new Styles();
 	}
 
 	@Override
