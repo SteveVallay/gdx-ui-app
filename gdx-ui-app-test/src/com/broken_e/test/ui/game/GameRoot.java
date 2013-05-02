@@ -14,6 +14,9 @@ import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.Pools;
+import com.badlogic.gdx.utils.Timer;
+import com.badlogic.gdx.utils.Timer.Task;
 import com.broken_e.test.ui.TestApp;
 import com.broken_e.test.ui.game.Mob.MobTouchedEvent;
 
@@ -27,6 +30,10 @@ public class GameRoot extends Group {
 	private Vector3 v3 = new Vector3();
 	private Matrix4 tmpMatrix4 = new Matrix4();
 
+	public Stats stats = new Stats();
+
+	// Timer timer = new Timer();
+
 	public GameRoot(TestApp app) {
 		this.app = app;
 	}
@@ -36,16 +43,16 @@ public class GameRoot extends Group {
 		this.setSize(16, (screenH / screenW) * 16);
 		cam.setToOrtho(false, getWidth(), getHeight());
 		cam.update();
-		this.addActor(new Mob(app));
 		this.addListener(new EventListener() {
 			@Override
 			public boolean handle(Event event) {
 				if (event instanceof MobTouchedEvent) {
-					Actor actor = event.getTarget();
-					if (actor instanceof Mob) {
-						event.stop();
-						actor.setColor(Color.BLUE);
-					}
+					Mob mob = (Mob) event.getTarget();
+					mob.remove();
+					Pools.free(mob);
+					// event.stop();
+					stats.pointUp();
+					app.getGameScreen().pointsChanged(stats.getPoints());
 				}
 				return false;
 			}
@@ -53,6 +60,7 @@ public class GameRoot extends Group {
 		return this;
 	}
 
+	/** changes coordinates from screen to game units */
 	@Override
 	public Actor hit(float x, float y, boolean touchable) {
 		v3.set(x, screenH - y, 0f);
@@ -60,16 +68,31 @@ public class GameRoot extends Group {
 		return super.hit(v3.x, v3.y, touchable);
 	}
 
-	@Override
-	public void act(float delta) {
-
-		super.act(delta);
-	}
-
+	/** sets batch to game units to draw and then back to screen */
 	public void draw(SpriteBatch batch, float parentAlpha) {
 		tmpMatrix4.set(batch.getProjectionMatrix());
 		batch.setProjectionMatrix(cam.combined);
 		super.draw(batch, parentAlpha);
 		batch.setProjectionMatrix(tmpMatrix4);
+	}
+
+	private float accum = 420f, end = 1f, totalTime;
+
+	@Override
+	public void act(float delta) {
+		totalTime += delta;
+		accum += delta;
+		if (accum > end) {
+			accum = 0;
+			if (end > .3f)
+				end -= .001f * Math.sqrt(totalTime);
+
+			this.addActor(Pools.obtain(Mob.class).init(app.skin.getAtlas().findRegion("white-pixel"), 1f));
+		}
+		super.act(delta);
+	}
+
+	public float getTotalTime() {
+		return totalTime;
 	}
 }
