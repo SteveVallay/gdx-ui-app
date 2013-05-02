@@ -37,14 +37,14 @@ public class Styles implements SkinStyler {
 
 		Color darkBlue = new Color(0f, 0f, .3f, 1f);
 
-		NinePatchDrawable btn1up = new NinePatchDrawable(atlas.createPatch("ui/patchThick"));
-		NinePatchDrawable btn1down = new NinePatchDrawable(atlas.createPatch("ui/patchThickDown"));
-		NinePatch window1patch = atlas.createPatch("ui/window1");
+		NinePatchDrawable btn1up = new NinePatchDrawable(atlas.createPatch("patchThick"));
+		NinePatchDrawable btn1down = new NinePatchDrawable(atlas.createPatch("patchThickDown"));
+		NinePatch window1patch = atlas.createPatch("window1");
 		skin.add("btn1up", btn1up);
 		skin.add("btn1down", btn1down);
 		skin.add("window1", window1patch);
 //		NinePatchDrawable window1 = (NinePatchDrawable) skin.getDrawable("window1");
-		skin.add("white-pixel", atlas.findRegion("ui/white-pixel"), TextureRegion.class);
+		skin.add("white-pixel", atlas.findRegion("white-pixel"), TextureRegion.class);
 
 		LabelStyle lbs = new LabelStyle();
 		lbs.font = fontDefault;

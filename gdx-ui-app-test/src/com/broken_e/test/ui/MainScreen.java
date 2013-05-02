@@ -18,7 +18,6 @@ public class MainScreen extends BaseScreen {
 		
 		button.addListener(new ClickListener(){
 			public void clicked (InputEvent event, float x, float y) {
-				Gdx.app.log("game screen", "button.click");
 				app.switchScreens(((TestApp) app).getGameScreen());
 				button.setChecked(false);
 			}

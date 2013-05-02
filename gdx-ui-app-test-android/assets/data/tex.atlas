@@ -1,82 +1,34 @@
+
 tex.png
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
-ui/gradient
+window1
   rotate: false
-  xy: 1, 4
-  size: 1, 500
-  orig: 1, 500
-  offset: 0, 0
-  index: -1
-ui/window1
-  rotate: false
-  xy: 4, 440
+  xy: 1, 38
   size: 64, 64
   split: 6, 6, 6, 6
   pad: 4, 4, 4, 4
   orig: 64, 64
   offset: 0, 0
   index: -1
-ui/icon-gear
+patchThick
   rotate: false
-  xy: 4, 382
-  size: 50, 56
-  orig: 65, 65
-  offset: 8, 4
-  index: -1
-ui/icon-checkon
-  rotate: false
-  xy: 70, 455
-  size: 50, 49
-  orig: 65, 65
-  offset: 8, 7
-  index: -1
-ui/icon-checkoff
-  rotate: false
-  xy: 4, 331
-  size: 49, 49
-  orig: 65, 65
-  offset: 8, 7
-  index: -1
-ui/icon-play
-  rotate: false
-  xy: 4, 280
-  size: 49, 49
-  orig: 65, 65
-  offset: 9, 7
-  index: -1
-ui/icon-question
-  rotate: false
-  xy: 4, 229
-  size: 49, 49
-  orig: 65, 65
-  offset: 8, 7
-  index: -1
-ui/icon-x
-  rotate: false
-  xy: 4, 178
-  size: 49, 49
-  orig: 65, 65
-  offset: 9, 7
-  index: -1
-ui/patchThick
-  rotate: false
-  xy: 4, 144
+  xy: 1, 4
   size: 32, 32
   split: 4, 4, 4, 4
   orig: 32, 32
   offset: 0, 0
   index: -1
-ui/patchThickDown
+patchThickDown
   rotate: false
-  xy: 4, 110
+  xy: 67, 70
   size: 32, 32
   split: 4, 4, 4, 4
   orig: 32, 32
   offset: 0, 0
   index: -1
-ui/white-pixel
+white-pixel
   rotate: false
   xy: 1, 1
   size: 1, 1
