@@ -27,7 +27,7 @@ public class Styles implements SkinStyler {
 		float s = Math.min(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		int smallFontSize = (int) (s / 16f);
 		int bigFontSize = (int) (s / 11f);
-		
+
 		FreeTypeFontGenerator gen = new FreeTypeFontGenerator(Gdx.files.internal("data/MAIAN.TTF"));
 		BitmapFont fontDefault = gen.generateFont(smallFontSize);
 		BitmapFont fontBig = gen.generateFont(bigFontSize);
@@ -43,7 +43,6 @@ public class Styles implements SkinStyler {
 		skin.add("btn1up", btn1up);
 		skin.add("btn1down", btn1down);
 		skin.add("window1", window1patch);
-//		NinePatchDrawable window1 = (NinePatchDrawable) skin.getDrawable("window1");
 		skin.add("white-pixel", atlas.findRegion("white-pixel"), TextureRegion.class);
 
 		LabelStyle lbs = new LabelStyle();
@@ -61,7 +60,6 @@ public class Styles implements SkinStyler {
 		tbs.pressedOffsetX = Math.round(1f * Gdx.graphics.getDensity());
 		tbs.pressedOffsetY = tbs.pressedOffsetX * -1f;
 		skin.add("default", tbs);
-
 
 	}
 

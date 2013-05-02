@@ -5,7 +5,7 @@ import com.broken_e.ui.SkinStyler;
 import com.broken_e.ui.UiApp;
 
 public class TestApp extends UiApp {
-	
+
 	private GameScreen gameScreen;
 
 	@Override
@@ -28,7 +28,7 @@ public class TestApp extends UiApp {
 		return new MainScreen(this);
 	}
 
-	public GameScreen getGameScreen(){
+	public GameScreen getGameScreen() {
 		if (gameScreen == null)
 			gameScreen = new GameScreen(this);
 		return gameScreen;
