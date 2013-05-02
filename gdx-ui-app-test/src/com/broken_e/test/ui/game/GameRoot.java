@@ -50,7 +50,6 @@ public class GameRoot extends Group {
 					Mob mob = (Mob) event.getTarget();
 					mob.remove();
 					Pools.free(mob);
-					// event.stop();
 					stats.pointUp();
 					app.getGameScreen().pointsChanged(stats.getPoints());
 				}
