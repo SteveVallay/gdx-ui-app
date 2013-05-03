@@ -45,4 +45,10 @@ public class KeyValue<T> {
 	public boolean containsKey(T key, boolean identity) {
 		return keys.contains(key, identity);
 	}
+
+	/** clears all keys and values */
+	public void clear() {
+		keys.clear();
+		values.clear();
+	}
 }

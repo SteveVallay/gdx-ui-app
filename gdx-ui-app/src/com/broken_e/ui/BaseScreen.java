@@ -24,7 +24,7 @@ public abstract class BaseScreen extends Group {
 		return this;
 	}
 
-	/** override for custom screen transitions, otherwise current screen just slides to the right */
+	/** override for custom screen transitions, otherwise current screen just slides to the left */
 	protected void screenOut() {
 		float xPos = -app.w;
 		MoveToAction action = Actions.moveTo(xPos, 0f, app.dur);

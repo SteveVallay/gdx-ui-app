@@ -22,13 +22,17 @@ public class Mob extends Actor {
 
 	private Sprite sprite = new Sprite();
 	private float speed;
+	float accum;
 
-	/** so that it can have a no-arg constructor and be poolable.  To be optimized still... */
+	/**
+	 * so that it can have a no-arg constructor and be poolable. To be optimized still...
+	 */
 	public Mob init(TextureRegion region, float speed) {
 		this.speed = speed;
+		accum = 0;
 		clearActions();
 		sprite.setRegion(region);
-		
+
 		setBounds(MathUtils.random(16f), MathUtils.random(12f), 1.2f, 1.2f);
 		setColor(Color.WHITE);
 		this.addListener(new InputListener() {
@@ -39,27 +43,42 @@ public class Mob extends Actor {
 		});
 		return this;
 	}
+	
 
 	@Override
 	public void act(float delta) {
 		if (getActions().size == 0) {
-			Actor p = getParent();
-			float px = p.getX();
-			float py = p.getY();
-			float x = MathUtils.random(px, p.getWidth() - px - getWidth());
-			float y = MathUtils.random(py, p.getHeight() - py - getHeight());
-			addAction(Actions.moveTo(x, y, speed));
+			addAction(Actions.color(Color.RED, speed));
+			newMoveTo();
 		}
+		accum += delta;
+		if (accum > speed)
+			fire(Pools.obtain(MobExplodeEvent.class));
 		super.act(delta);
 	}
-	
-	
-	
-	
+
+	private void newMoveTo() {
+		Actor p = getParent();
+		float px = p.getX();
+		float py = p.getY();
+		float x = MathUtils.random(px, p.getWidth() - px - getWidth());
+		float y = MathUtils.random(py, p.getHeight() - py - getHeight());
+		addAction(Actions.sequence(Actions.moveTo(x, y, 2f), Actions.run(moveToRunnable)));
+	}
+
+	private Runnable moveToRunnable = new Runnable() {
+		@Override
+		public void run() {
+			newMoveTo();
+		}
+	};
+
 	private final float buf = .1f;
+
 	@Override
-	public Actor hit(float x, float y, boolean touchable){
-		if (touchable && this.getTouchable() != Touchable.enabled) return null;
+	public Actor hit(float x, float y, boolean touchable) {
+		if (touchable && this.getTouchable() != Touchable.enabled)
+			return null;
 		return x >= -buf && x < getWidth() + buf && y >= -buf && y < getHeight() + buf ? this : null;
 	}
 
@@ -75,5 +94,8 @@ public class Mob extends Actor {
 
 	/** dummy class for specifying the type of event being a mob touched */
 	public static class MobTouchedEvent extends Event {
+	}
+	
+	public static class MobExplodeEvent extends Event {
 	}
 }

@@ -17,7 +17,9 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Pools;
 import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.Timer.Task;
+import com.broken_e.test.ui.GameOverScreen;
 import com.broken_e.test.ui.TestApp;
+import com.broken_e.test.ui.game.Mob.MobExplodeEvent;
 import com.broken_e.test.ui.game.Mob.MobTouchedEvent;
 
 public class GameRoot extends Group {
@@ -52,11 +54,23 @@ public class GameRoot extends Group {
 					Pools.free(mob);
 					stats.pointUp();
 					app.getGameScreen().pointsChanged(stats.getPoints());
+				} else if (event instanceof MobExplodeEvent){
+					Mob mob = (Mob) event.getTarget();
+					mob.remove();
+					Pools.free(mob);
+					app.getGameScreen().mobExploded(stats.mobExploded());
+					if (stats.getStrikes() >= 5)
+						gameOver();
 				}
 				return false;
 			}
 		});
+		stats.reset();
 		return this;
+	}
+
+	private void gameOver() {
+		app.switchScreens(new GameOverScreen(app, stats));
 	}
 
 	/** changes coordinates from screen to game units */
@@ -84,11 +98,13 @@ public class GameRoot extends Group {
 		if (accum > end) {
 			accum = 0;
 			if (end > .3f)
-				end -= .001f * Math.sqrt(totalTime);
+				end -= .01f;
 
-			this.addActor(Pools.obtain(Mob.class).init(app.skin.getAtlas().findRegion("white-pixel"), 1f));
+			this.addActor(Pools.obtain(Mob.class).init(app.skin.getAtlas().findRegion("white-pixel"), end * 10f));
 		}
 		super.act(delta);
+		if (stats.getStrikes() >= 5)
+		Gdx.app.log("gameroot", "strikes: " + 5);
 	}
 
 	public float getTotalTime() {
