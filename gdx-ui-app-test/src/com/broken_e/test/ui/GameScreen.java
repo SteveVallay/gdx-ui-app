@@ -1,6 +1,5 @@
 package com.broken_e.test.ui;
 
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.utils.StringBuilder;
@@ -16,7 +15,8 @@ public class GameScreen extends BaseScreen {
 	
 	public GameScreen(UiApp app) {
 		super(app);
-		
+		mainTable.setBackground(app.skin.getDrawable("window1"));
+		mainTable.setColor(app.skin.getColor("lt-green"));
 		mainTable.addActor(new GameRoot(this, app.atlas).init());
 		
 		Label lblPointText = new Label("Points: ", app.skin);

@@ -1,7 +1,7 @@
 package com.broken_e.test.ui.game;
 
-import com.broken_e.utils.KeyValue;
 import com.badlogic.gdx.utils.StringBuilder;
+import com.broken_e.utils.KeyValue;
 
 public class Stats {
 

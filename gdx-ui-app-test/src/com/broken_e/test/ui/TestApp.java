@@ -1,6 +1,5 @@
 package com.broken_e.test.ui;
 
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.broken_e.ui.BaseScreen;
 import com.broken_e.ui.SkinStyler;
 import com.broken_e.ui.UiApp;

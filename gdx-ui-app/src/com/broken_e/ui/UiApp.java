@@ -107,7 +107,8 @@ public abstract class UiApp implements ApplicationListener {
 		if (currentScreen != null) {
 			currentScreen.screenOut();
 			currentScreen.setTouchable(Touchable.disabled);
-			stage.addActor(currentScreen);
+			currentScreen.toFront();
+//			stage.addActor(currentScreen);
 		}
 	}
 

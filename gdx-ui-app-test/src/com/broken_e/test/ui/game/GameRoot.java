@@ -1,28 +1,17 @@
 package com.broken_e.test.ui.game;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.Matrix4;
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Event;
 import com.badlogic.gdx.scenes.scene2d.EventListener;
 import com.badlogic.gdx.scenes.scene2d.Group;
-import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.Touchable;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Pool;
-import com.badlogic.gdx.utils.Pools;
-import com.badlogic.gdx.utils.Timer;
-import com.badlogic.gdx.utils.Timer.Task;
-import com.broken_e.test.ui.GameOverScreen;
 import com.broken_e.test.ui.GameScreen;
-import com.broken_e.test.ui.TestApp;
 import com.broken_e.test.ui.game.Mob.MobExplodeEvent;
 import com.broken_e.test.ui.game.Mob.MobTouchedEvent;
 
@@ -107,7 +96,7 @@ public class GameRoot extends Group {
 			if (end > .3f)
 				end -= .01f;
 
-			this.addActor(mobPool.obtain());
+			this.addActor(mobPool.obtain().init(atlas.findRegion("white-pixel"), end * 10f));
 		}
 		super.act(delta);
 		if (stats.getStrikes() >= 5)
@@ -121,7 +110,7 @@ public class GameRoot extends Group {
 	private Pool<Mob> mobPool = new Pool<Mob>(){
 		@Override
 		protected Mob newObject() {
-			return new Mob(atlas.findRegion("white-pixel"), end * 10f);
+			return new Mob();
 		}
 		
 	};

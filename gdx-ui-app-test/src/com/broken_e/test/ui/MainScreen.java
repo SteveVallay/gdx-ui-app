@@ -1,9 +1,11 @@
 package com.broken_e.test.ui;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.utils.Align;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.broken_e.ui.BaseScreen;
 import com.broken_e.ui.UiApp;
@@ -13,7 +15,6 @@ public class MainScreen extends BaseScreen {
 	public MainScreen(final UiApp app) {
 		super(app);
 
-		Label label = new Label("Test App", app.skin);
 		final TextButton button = new TextButton("Start", app.skin);
 
 		button.addListener(new ClickListener() {
@@ -22,11 +23,27 @@ public class MainScreen extends BaseScreen {
 				button.setChecked(false);
 			}
 		});
-
-		this.mainTable.add(label);
-		this.mainTable.row();
-		this.mainTable.add(button);
+		mainTable.defaults().pad(6f);
+		mainTable.setBackground(app.skin.getDrawable("window1"));
+		mainTable.setColor(app.skin.getColor("lt-blue"));
+		mainTable.add(label("gdx-ui-app: test!", Color.GREEN));
+		mainTable.row();
+		mainTable.add(button);
+		mainTable.row();
+		mainTable.add(label("To play:\nclick the objects moving around\nbefore they turn fully red.",Color.LIGHT_GRAY));
+		mainTable.row();
+		mainTable.add(label("If you don't and one turns red,\nyou will get a strike.", Color.LIGHT_GRAY));
+		mainTable.row();
+		mainTable.add(label("5 strikes and you are out!", Color.RED));
 	}
+	
+	private Label label(String text, Color color){
+		Label label = new Label(text, app.skin);
+		label.setAlignment(Align.center, Align.center);
+		label.setColor(color);
+		return label;
+	}
+	
 
 	@Override
 	public void onBackPress() {

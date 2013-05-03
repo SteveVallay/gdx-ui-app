@@ -1,46 +1,44 @@
 package com.broken_e.test.ui.game;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.MathUtils;
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Event;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
-import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Pool;
-import com.badlogic.gdx.utils.Pools;
-import com.broken_e.test.ui.TestApp;
 
 public class Mob extends Actor {
 
 	private Sprite sprite = new Sprite();
 	private float speed;
 	float accum;
-
-	/**
-	 * so that it can have a no-arg constructor and be poolable. To be optimized still...
-	 */
-	public Mob(TextureRegion region, float speed) {
-		this.speed = speed;
-		accum = 0;
-		clearActions();
-		sprite.setRegion(region);
-
-		setBounds(MathUtils.random(16f), MathUtils.random(12f), 1.2f, 1.2f);
-		setColor(Color.WHITE);
-		this.addListener(new InputListener() {
+	
+	public Mob(){
+		addListener(new InputListener() {
 			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
 				Mob.this.fire(mobTouchedEventPool.obtain());
 				return false;
 			}
 		});
+	}
+
+	/**
+	 * so that it can have a no-arg constructor and be poolable.
+	 */
+	public Mob init(TextureRegion region, float speed) {
+		this.speed = speed;
+		accum = 0;
+		clearActions();
+		sprite.setRegion(region);
+		setBounds(MathUtils.random(16f), MathUtils.random(12f), 1.2f, 1.2f);
+		setColor(Color.WHITE);
+		return this;
 	}
 	
 

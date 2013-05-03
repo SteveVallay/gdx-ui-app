@@ -11,7 +11,7 @@ public class DesktopStarter {
 		cfg.useGL20 = false;
 		{
 			/** set resolution here */
-			int i = 2; 
+			int i = 1; 
 			boolean isLandscape = true;
 
 			int[][] res = new int[8][];
