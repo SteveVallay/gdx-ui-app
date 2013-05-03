@@ -18,7 +18,7 @@ public class MainScreen extends BaseScreen {
 
 		button.addListener(new ClickListener() {
 			public void clicked(InputEvent event, float x, float y) {
-				app.switchScreens(((TestApp) app).getGameScreen());
+				app.switchScreens(new GameScreen(app));
 				button.setChecked(false);
 			}
 		});

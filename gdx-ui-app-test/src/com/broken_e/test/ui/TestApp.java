@@ -7,7 +7,7 @@ import com.broken_e.ui.UiApp;
 
 public class TestApp extends UiApp {
 
-	private GameScreen gameScreen;
+//	private GameScreen gameScreen;
 
 	@Override
 	protected String atlasPath() {
@@ -29,11 +29,11 @@ public class TestApp extends UiApp {
 		return new MainScreen(this);
 	}
 
-	public GameScreen getGameScreen() {
-		if (gameScreen == null)
-			gameScreen = new GameScreen(this);
-		return gameScreen;
-	}
+//	public GameScreen getGameScreen() {
+//		if (gameScreen == null)
+//			gameScreen = new GameScreen(this);
+//		return gameScreen;
+//	}
 	
 //	@Override
 //	public void render(){

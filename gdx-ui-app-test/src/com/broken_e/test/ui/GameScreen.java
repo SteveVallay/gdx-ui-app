@@ -5,6 +5,7 @@ import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.utils.StringBuilder;
 import com.broken_e.test.ui.game.GameRoot;
+import com.broken_e.test.ui.game.Stats;
 import com.broken_e.ui.BaseScreen;
 import com.broken_e.ui.UiApp;
 
@@ -16,7 +17,7 @@ public class GameScreen extends BaseScreen {
 	public GameScreen(UiApp app) {
 		super(app);
 		
-		mainTable.addActor(new GameRoot((TestApp) app).init());
+		mainTable.addActor(new GameRoot(this, app.skin).init());
 		
 		Label lblPointText = new Label("Points: ", app.skin);
 		lblPointText.setTouchable(Touchable.disabled);
@@ -45,6 +46,11 @@ public class GameScreen extends BaseScreen {
 
 	public void mobExploded(StringBuilder totalStrikes) {
 		lblStrikes.setText(totalStrikes);
+	}
+
+	public void gameOver(Stats stats) {
+		app.switchScreens(new GameOverScreen(app, stats));
+		
 	}
 
 }

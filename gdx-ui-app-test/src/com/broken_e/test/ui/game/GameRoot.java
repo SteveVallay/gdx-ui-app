@@ -13,18 +13,21 @@ import com.badlogic.gdx.scenes.scene2d.EventListener;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Pools;
 import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.Timer.Task;
 import com.broken_e.test.ui.GameOverScreen;
+import com.broken_e.test.ui.GameScreen;
 import com.broken_e.test.ui.TestApp;
 import com.broken_e.test.ui.game.Mob.MobExplodeEvent;
 import com.broken_e.test.ui.game.Mob.MobTouchedEvent;
 
 public class GameRoot extends Group {
 
-	private TestApp app;
+	private GameScreen screen;
+	private Skin skin;
 
 	private OrthographicCamera cam = new OrthographicCamera();
 	private float screenW = Gdx.graphics.getWidth();
@@ -36,8 +39,9 @@ public class GameRoot extends Group {
 
 	// Timer timer = new Timer();
 
-	public GameRoot(TestApp app) {
-		this.app = app;
+	public GameRoot(GameScreen screen, Skin skin) {
+		this.screen = screen;
+		this.skin = skin;
 	}
 
 	/** used because actors usually need to run the full constructor before adding things to them */
@@ -53,12 +57,12 @@ public class GameRoot extends Group {
 					mob.remove();
 					Pools.free(mob);
 					stats.pointUp();
-					app.getGameScreen().pointsChanged(stats.getPoints());
+					screen.pointsChanged(stats.getPoints());
 				} else if (event instanceof MobExplodeEvent){
 					Mob mob = (Mob) event.getTarget();
 					mob.remove();
 					Pools.free(mob);
-					app.getGameScreen().mobExploded(stats.mobExploded());
+					screen.mobExploded(stats.mobExploded());
 					if (stats.getStrikes() >= 5)
 						gameOver();
 				}
@@ -70,7 +74,8 @@ public class GameRoot extends Group {
 	}
 
 	private void gameOver() {
-		app.switchScreens(new GameOverScreen(app, stats));
+		
+		screen.gameOver(stats);
 	}
 
 	/** changes coordinates from screen to game units */
@@ -100,7 +105,7 @@ public class GameRoot extends Group {
 			if (end > .3f)
 				end -= .01f;
 
-			this.addActor(Pools.obtain(Mob.class).init(app.skin.getAtlas().findRegion("white-pixel"), end * 10f));
+			this.addActor(Pools.obtain(Mob.class).init(skin.getAtlas().findRegion("white-pixel"), end * 10f));
 		}
 		super.act(delta);
 		if (stats.getStrikes() >= 5)

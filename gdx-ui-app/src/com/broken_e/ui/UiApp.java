@@ -82,7 +82,6 @@ public abstract class UiApp implements ApplicationListener {
 			if (durAccum <= 0f) {
 				currentScreen.hide();
 				currentScreen.remove();
-//				Gdx.app.log("currentScreen", String.valueOf(currentScreen.getClass()) + "\nparent: " + currentScreen.getParent());
 				currentScreen = nextScreen;
 				currentScreen.setTouchable(Touchable.enabled);
 				currentScreen.setPosition(0f, 0f);
