@@ -35,15 +35,16 @@ public abstract class UiApp implements ApplicationListener {
 
 		stage = new Stage();
 		atlas = new TextureAtlas(atlasPath());
-		
-		skin = new Skin(atlas);
+
+		skin = new Skin();
+		skin.addRegions(atlas);
 		String skinPath = skinPath();
 		if (skinPath != null)
 			skin.load(Gdx.files.internal(skinPath));
 		SkinStyler skinStyler = getSkinStyler();
 		if (skinStyler != null)
 			skinStyler.styleSkin(skin, atlas);
-		
+
 		Gdx.input.setInputProcessor(stage);
 		Gdx.input.setCatchBackKey(true);
 		stage.addListener(new InputListener() {
@@ -62,8 +63,8 @@ public abstract class UiApp implements ApplicationListener {
 
 	/** provide the path to the atlas */
 	protected abstract String atlasPath();
-	
-	/** provide the path to the skin file (optional).  If no path is provided, an empty skin is created. */
+
+	/** provide the path to the skin file (optional). If no path is provided, an empty skin is created. */
 	protected abstract String skinPath();
 
 	/** add the skin styles here (optional, can be null) */
@@ -71,8 +72,6 @@ public abstract class UiApp implements ApplicationListener {
 
 	/** specify the screen to be loaded at the beginning */
 	protected abstract BaseScreen getFirstScreen();
-
-	
 
 	@Override
 	public void render() {
@@ -121,21 +120,17 @@ public abstract class UiApp implements ApplicationListener {
 
 	@Override
 	public void pause() {
-		// TODO Auto-generated method stub
-
 	}
 
 	@Override
 	public void resume() {
-		// TODO Auto-generated method stub
-
 	}
 
 	@Override
 	public void dispose() {
 		stage.dispose();
 		skin.dispose();
+		atlas.dispose();
 	}
-
 
 }

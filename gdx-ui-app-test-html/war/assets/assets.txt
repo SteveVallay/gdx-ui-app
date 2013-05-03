@@ -1,0 +1,5 @@
+d:
+d:data
+b:data/MAIAN.TTF
+b:data/tex.atlas
+i:data/tex.png
