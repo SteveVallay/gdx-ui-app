@@ -17,7 +17,7 @@ public class GameScreen extends BaseScreen {
 	public GameScreen(UiApp app) {
 		super(app);
 		
-		mainTable.addActor(new GameRoot(this, app.skin).init());
+		mainTable.addActor(new GameRoot(this, app.atlas).init());
 		
 		Label lblPointText = new Label("Points: ", app.skin);
 		lblPointText.setTouchable(Touchable.disabled);

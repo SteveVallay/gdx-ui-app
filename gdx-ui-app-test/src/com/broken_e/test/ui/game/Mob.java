@@ -27,7 +27,7 @@ public class Mob extends Actor {
 	/**
 	 * so that it can have a no-arg constructor and be poolable. To be optimized still...
 	 */
-	public Mob init(TextureRegion region, float speed) {
+	public Mob(TextureRegion region, float speed) {
 		this.speed = speed;
 		accum = 0;
 		clearActions();
@@ -37,11 +37,10 @@ public class Mob extends Actor {
 		setColor(Color.WHITE);
 		this.addListener(new InputListener() {
 			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-				Mob.this.fire(Pools.obtain(MobTouchedEvent.class));
+				Mob.this.fire(mobTouchedEventPool.obtain());
 				return false;
 			}
 		});
-		return this;
 	}
 	
 
@@ -53,7 +52,7 @@ public class Mob extends Actor {
 		}
 		accum += delta;
 		if (accum > speed)
-			fire(Pools.obtain(MobExplodeEvent.class));
+			fire(mobExplodeEventPool.obtain());
 		super.act(delta);
 	}
 
@@ -95,7 +94,19 @@ public class Mob extends Actor {
 	/** dummy class for specifying the type of event being a mob touched */
 	public static class MobTouchedEvent extends Event {
 	}
+	private Pool<MobTouchedEvent> mobTouchedEventPool = new Pool<MobTouchedEvent>(){
+		@Override
+		protected MobTouchedEvent newObject() {
+			return new MobTouchedEvent();
+		}
+	};
 	
 	public static class MobExplodeEvent extends Event {
 	}
+	private Pool<MobExplodeEvent> mobExplodeEventPool = new Pool<MobExplodeEvent>(){
+		@Override
+		protected MobExplodeEvent newObject() {
+			return new MobExplodeEvent();
+		}
+	};
 }

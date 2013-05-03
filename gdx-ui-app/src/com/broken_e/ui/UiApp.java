@@ -15,7 +15,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 
 public abstract class UiApp implements ApplicationListener {
 	public Stage stage;
-	protected TextureAtlas atlas;
+	public TextureAtlas atlas;
 	public Skin skin;
 	public static InputMultiplexer inputs = new InputMultiplexer();
 
@@ -33,7 +33,7 @@ public abstract class UiApp implements ApplicationListener {
 		w = Gdx.graphics.getWidth();
 		h = Gdx.graphics.getHeight();
 
-		stage = new Stage();
+		stage = new Stage(w, h, false);
 		atlas = new TextureAtlas(atlasPath());
 
 		skin = new Skin();

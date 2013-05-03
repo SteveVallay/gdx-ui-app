@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
@@ -15,6 +16,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.Pool;
 import com.badlogic.gdx.utils.Pools;
 import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.Timer.Task;
@@ -27,7 +29,7 @@ import com.broken_e.test.ui.game.Mob.MobTouchedEvent;
 public class GameRoot extends Group {
 
 	private GameScreen screen;
-	private Skin skin;
+	private TextureAtlas atlas;
 
 	private OrthographicCamera cam = new OrthographicCamera();
 	private float screenW = Gdx.graphics.getWidth();
@@ -39,9 +41,9 @@ public class GameRoot extends Group {
 
 	// Timer timer = new Timer();
 
-	public GameRoot(GameScreen screen, Skin skin) {
+	public GameRoot(GameScreen screen, TextureAtlas atlas) {
 		this.screen = screen;
-		this.skin = skin;
+		this.atlas = atlas;
 	}
 
 	/** used because actors usually need to run the full constructor before adding things to them */
@@ -55,13 +57,13 @@ public class GameRoot extends Group {
 				if (event instanceof MobTouchedEvent) {
 					Mob mob = (Mob) event.getTarget();
 					mob.remove();
-					Pools.free(mob);
+					mobPool.free(mob);
 					stats.pointUp();
 					screen.pointsChanged(stats.getPoints());
 				} else if (event instanceof MobExplodeEvent){
 					Mob mob = (Mob) event.getTarget();
 					mob.remove();
-					Pools.free(mob);
+					mobPool.free(mob);
 					screen.mobExploded(stats.mobExploded());
 					if (stats.getStrikes() >= 5)
 						gameOver();
@@ -105,7 +107,7 @@ public class GameRoot extends Group {
 			if (end > .3f)
 				end -= .01f;
 
-			this.addActor(Pools.obtain(Mob.class).init(skin.getAtlas().findRegion("white-pixel"), end * 10f));
+			this.addActor(mobPool.obtain());
 		}
 		super.act(delta);
 		if (stats.getStrikes() >= 5)
@@ -115,4 +117,12 @@ public class GameRoot extends Group {
 	public float getTotalTime() {
 		return totalTime;
 	}
+	
+	private Pool<Mob> mobPool = new Pool<Mob>(){
+		@Override
+		protected Mob newObject() {
+			return new Mob(atlas.findRegion("white-pixel"), end * 10f);
+		}
+		
+	};
 }

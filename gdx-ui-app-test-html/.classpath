@@ -4,7 +4,6 @@
 	<classpathentry combineaccessrules="false" exported="true" kind="src" path="/gdx-ui-app-test"/>
 	<classpathentry exported="true" kind="con" path="com.google.gwt.eclipse.core.GWT_CONTAINER"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry combineaccessrules="false" exported="true" kind="src" path="/gdx"/>
 	<classpathentry combineaccessrules="false" exported="true" kind="src" path="/gdx-backends-gwt"/>
 	<classpathentry combineaccessrules="false" exported="true" kind="src" path="/gdx-ui-app"/>
 	<classpathentry kind="output" path="war/WEB-INF/classes"/>

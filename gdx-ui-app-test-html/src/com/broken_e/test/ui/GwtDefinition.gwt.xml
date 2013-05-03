@@ -3,6 +3,8 @@
 <module>
 	<inherits name='com.badlogic.gdx.backends.gdx_backends_gwt' />
 	<inherits name='TestApp' />
+	
+   	<inherits name='ui' />
 	<entry-point class='com.broken_e.test.ui.client.GwtLauncher' />
 	<set-configuration-property name="gdx.assetpath" value="../gdx-ui-app-test-android/assets" />
 </module>

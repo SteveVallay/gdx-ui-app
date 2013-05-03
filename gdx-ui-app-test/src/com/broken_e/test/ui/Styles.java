@@ -24,16 +24,17 @@ public class Styles implements SkinStyler {
 
 	@Override
 	public void styleSkin(Skin skin, TextureAtlas atlas) {
-		float s = Math.min(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-		int smallFontSize = (int) (s / 16f);
-		int bigFontSize = (int) (s / 11f);
-
-		FreeTypeFontGenerator gen = new FreeTypeFontGenerator(Gdx.files.internal("data/MAIAN.TTF"));
-		BitmapFont fontDefault = gen.generateFont(smallFontSize);
-		BitmapFont fontBig = gen.generateFont(bigFontSize);
-		gen.dispose();
-		skin.add("default", fontDefault);
-		skin.add("big", fontBig);
+//		float s = Math.min(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+//		int smallFontSize = (int) (s / 16f);
+//		int bigFontSize = (int) (s / 11f);
+//
+//		FreeTypeFontGenerator gen = new FreeTypeFontGenerator(Gdx.files.internal("data/MAIAN.TTF"));
+//		BitmapFont fontDefault = gen.generateFont(smallFontSize);
+//		BitmapFont fontBig = gen.generateFont(bigFontSize);
+//		gen.dispose();
+		BitmapFont font = new BitmapFont(Gdx.files.internal("data/lucida-console-21.fnt"), false);
+		skin.add("default", font);
+//		skin.add("big", fontBig);
 
 		Color darkBlue = new Color(0f, 0f, .3f, 1f);
 
@@ -46,16 +47,11 @@ public class Styles implements SkinStyler {
 		skin.add("white-pixel", atlas.findRegion("white-pixel"), TextureRegion.class);
 
 		LabelStyle lbs = new LabelStyle();
-		lbs.font = fontDefault;
+		lbs.font = font;
 		lbs.fontColor = Color.WHITE;
 		skin.add("default", lbs);
 
-		LabelStyle lbsBig = new LabelStyle();
-		lbsBig.font = fontBig;
-		lbsBig.fontColor = Color.BLACK;
-		skin.add("big", lbsBig);
-
-		TextButtonStyle tbs = new TextButtonStyle(btn1up, btn1down, btn1down, fontDefault);
+		TextButtonStyle tbs = new TextButtonStyle(btn1up, btn1down, btn1down, font);
 		tbs.fontColor = darkBlue;
 		tbs.pressedOffsetX = Math.round(1f * Gdx.graphics.getDensity());
 		tbs.pressedOffsetY = tbs.pressedOffsetX * -1f;
