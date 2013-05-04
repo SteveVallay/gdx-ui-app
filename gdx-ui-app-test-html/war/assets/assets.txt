@@ -1,4 +1,4 @@
-d:war/
+d:
 d:data
 t:data/lucida-console-21.fnt
 i:data/lucida-console-21.png

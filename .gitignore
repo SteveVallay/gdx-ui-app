@@ -11,6 +11,7 @@
 # generated files
 bin/
 gen/
+com.broken_e.test.ui.GwtDefinition/
 
 # Local configuration file (sdk path, etc)
 local.properties
