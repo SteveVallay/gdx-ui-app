@@ -13,19 +13,30 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 
+/**
+ * an ApplicationListener that is similar to gdx.Game but has screen transitions and built-in boilerplate code for a few
+ * things that I use in pretty much every libgdx app
+ * 
+ * @author trey miller
+ */
 public abstract class UiApp implements ApplicationListener {
 	public Stage stage;
 	public TextureAtlas atlas;
 	public Skin skin;
+
+	/** add to this to have other inputs if you want */
 	public static InputMultiplexer inputs = new InputMultiplexer();
+
+	/** the width and height of the screen */
+	public float w, h;
 
 	private BaseScreen currentScreen, nextScreen;
 
-	public float w, h;
-
-	private float durAccum = -420f;
+	/** the duration of the screen transitions */
 	protected float dur = .333f;
+	private float durAccum = -420f;
 
+	/** the color of glClearColor */
 	private final Color clearColor = new Color(Color.BLACK);
 
 	@Override
@@ -35,7 +46,6 @@ public abstract class UiApp implements ApplicationListener {
 
 		stage = new Stage(w, h, false);
 		atlas = new TextureAtlas(atlasPath());
-
 		skin = new Skin();
 		skin.addRegions(atlas);
 		String skinPath = skinPath();
@@ -87,17 +97,18 @@ public abstract class UiApp implements ApplicationListener {
 				nextScreen = null;
 			}
 		}
-
 		Gdx.gl.glClearColor(clearColor.r, clearColor.g, clearColor.b, clearColor.a);
 		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
 		stage.act(delta);
 		stage.draw();
 	}
 
+	/** glClearColor is called every frame and uses this color */
 	public void setClearColor(Color color) {
 		clearColor.set(color);
 	}
 
+	/** like Game#setScreen(Screen) but includes a screen transition */
 	public void switchScreens(BaseScreen screen) {
 		durAccum = dur;
 		nextScreen = screen;
@@ -108,7 +119,6 @@ public abstract class UiApp implements ApplicationListener {
 			currentScreen.screenOut();
 			currentScreen.setTouchable(Touchable.disabled);
 			currentScreen.toFront();
-//			stage.addActor(currentScreen);
 		}
 	}
 

@@ -4,10 +4,13 @@ import com.broken_e.ui.BaseScreen;
 import com.broken_e.ui.SkinStyler;
 import com.broken_e.ui.UiApp;
 
+/**
+ * an example game using the gdx-ui-app stuff.
+ * 
+ * @author trey miller
+ * 
+ */
 public class TestApp extends UiApp {
-
-//	private GameScreen gameScreen;
-
 	@Override
 	protected String atlasPath() {
 		return "data/tex.atlas";
@@ -27,17 +30,4 @@ public class TestApp extends UiApp {
 	protected BaseScreen getFirstScreen() {
 		return new MainScreen(this);
 	}
-
-//	public GameScreen getGameScreen() {
-//		if (gameScreen == null)
-//			gameScreen = new GameScreen(this);
-//		return gameScreen;
-//	}
-	
-//	@Override
-//	public void render(){
-//		super.render();
-//		Table.drawDebug(stage);
-//	}
-
 }

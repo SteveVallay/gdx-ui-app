@@ -12,25 +12,19 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
 import com.broken_e.ui.SkinStyler;
 
+/**
+ * @author trey miller
+ */
 public class Styles implements SkinStyler {
 
 	@Override
 	public void styleSkin(Skin skin, TextureAtlas atlas) {
-//		float s = Math.min(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-//		int smallFontSize = (int) (s / 16f);
-//		int bigFontSize = (int) (s / 11f);
-//
-//		FreeTypeFontGenerator gen = new FreeTypeFontGenerator(Gdx.files.internal("data/MAIAN.TTF"));
-//		BitmapFont fontDefault = gen.generateFont(smallFontSize);
-//		BitmapFont fontBig = gen.generateFont(bigFontSize);
-//		gen.dispose();
 		BitmapFont font = new BitmapFont(Gdx.files.internal("data/lucida-console-21.fnt"), false);
 		skin.add("default", font);
-//		skin.add("big", fontBig);
 
-		skin.add("lt-blue",new Color(.6f, .8f, 1f, 1f));
-		skin.add("lt-green",new Color(.6f, .9f, .6f, 1f));
-		skin.add("dark-blue",new Color(.1f, .3f, 1f, 1f));
+		skin.add("lt-blue", new Color(.6f, .8f, 1f, 1f));
+		skin.add("lt-green", new Color(.6f, .9f, .6f, 1f));
+		skin.add("dark-blue", new Color(.1f, .3f, 1f, 1f));
 
 		NinePatchDrawable btn1up = new NinePatchDrawable(atlas.createPatch("patchThick"));
 		NinePatchDrawable btn1down = new NinePatchDrawable(atlas.createPatch("patchThickDown"));

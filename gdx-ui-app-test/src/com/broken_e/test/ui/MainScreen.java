@@ -10,6 +10,12 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.broken_e.ui.BaseScreen;
 import com.broken_e.ui.UiApp;
 
+/**
+ * the first screen you see in the game.
+ * 
+ * @author trey miller
+ * 
+ */
 public class MainScreen extends BaseScreen {
 
 	public MainScreen(final UiApp app) {
@@ -30,20 +36,20 @@ public class MainScreen extends BaseScreen {
 		mainTable.row();
 		mainTable.add(button);
 		mainTable.row();
-		mainTable.add(label("To play:\nclick the objects moving around\nbefore they turn fully red.",Color.LIGHT_GRAY));
+		mainTable
+				.add(label("To play:\nclick the objects moving around\nbefore they turn fully red.", Color.LIGHT_GRAY));
 		mainTable.row();
 		mainTable.add(label("If you don't and one turns red,\nyou will get a strike.", Color.LIGHT_GRAY));
 		mainTable.row();
 		mainTable.add(label("5 strikes and you are out!", Color.RED));
 	}
-	
-	private Label label(String text, Color color){
+
+	private Label label(String text, Color color) {
 		Label label = new Label(text, app.skin);
 		label.setAlignment(Align.center, Align.center);
 		label.setColor(color);
 		return label;
 	}
-	
 
 	@Override
 	public void onBackPress() {

@@ -8,6 +8,8 @@ import com.badlogic.gdx.utils.FloatArray;
  * Stores a collection of objects along with a float associated with each that is the object's weight for randomizing.
  * Weights can be any value, and the random output is chosen based on the item weight's size relative to all other item
  * weights in the collection.
+ * 
+ * @author trey miller
  */
 public class WeightedRandom<T> {
 

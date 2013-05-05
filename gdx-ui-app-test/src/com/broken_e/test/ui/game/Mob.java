@@ -13,13 +13,19 @@ import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.utils.Pool;
 
+/**
+ * the main (only) game object
+ * 
+ * @author trey miller
+ * 
+ */
 public class Mob extends Actor {
 
 	private Sprite sprite = new Sprite();
 	private float speed;
 	float accum;
-	
-	public Mob(){
+
+	public Mob() {
 		addListener(new InputListener() {
 			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
 				Mob.this.fire(mobTouchedEventPool.obtain());
@@ -28,22 +34,20 @@ public class Mob extends Actor {
 		});
 	}
 
-	/**
-	 * so that it can have a no-arg constructor and be poolable.
-	 */
+	/** resets the mob for poolability */
 	public Mob init(TextureRegion region, float speed) {
 		this.speed = speed;
 		accum = 0;
-		clearActions();
 		sprite.setRegion(region);
 		setBounds(MathUtils.random(16f), MathUtils.random(12f), 1.2f, 1.2f);
 		setColor(Color.WHITE);
+		clearActions();
 		return this;
 	}
-	
 
 	@Override
 	public void act(float delta) {
+		/** would do this in init except there's no parent at that point for newMoveTo() */
 		if (getActions().size == 0) {
 			addAction(Actions.color(Color.RED, speed));
 			newMoveTo();
@@ -72,6 +76,7 @@ public class Mob extends Actor {
 
 	private final float buf = .1f;
 
+	/** gives the mobs a bit of padding for click so if you click slightly outside the bounds it still works */
 	@Override
 	public Actor hit(float x, float y, boolean touchable) {
 		if (touchable && this.getTouchable() != Touchable.enabled)
@@ -79,6 +84,7 @@ public class Mob extends Actor {
 		return x >= -buf && x < getWidth() + buf && y >= -buf && y < getHeight() + buf ? this : null;
 	}
 
+	/** just sets the sprite to this actor's stuff and then draws it */
 	public void draw(SpriteBatch batch, float parentAlpha) {
 		Color color = getColor();
 		sprite.setColor(color.r, color.g, color.b, color.a * parentAlpha);
@@ -92,16 +98,21 @@ public class Mob extends Actor {
 	/** dummy class for specifying the type of event being a mob touched */
 	public static class MobTouchedEvent extends Event {
 	}
-	private Pool<MobTouchedEvent> mobTouchedEventPool = new Pool<MobTouchedEvent>(){
+
+	/** pool for the MobTouchedEvent */
+	private static Pool<MobTouchedEvent> mobTouchedEventPool = new Pool<MobTouchedEvent>() {
 		@Override
 		protected MobTouchedEvent newObject() {
 			return new MobTouchedEvent();
 		}
 	};
-	
+
+	/** dummy class for specifying the type of event being a mob exploded */
 	public static class MobExplodeEvent extends Event {
 	}
-	private Pool<MobExplodeEvent> mobExplodeEventPool = new Pool<MobExplodeEvent>(){
+
+	/** pool for the MobExplodeEvent */
+	private static Pool<MobExplodeEvent> mobExplodeEventPool = new Pool<MobExplodeEvent>() {
 		@Override
 		protected MobExplodeEvent newObject() {
 			return new MobExplodeEvent();

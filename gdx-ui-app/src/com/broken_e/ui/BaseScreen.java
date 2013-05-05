@@ -6,10 +6,20 @@ import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.actions.MoveToAction;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 
+/**
+ * the abstract base screen class similar to gdx.Screen but used for UiApp and includes screen transitions
+ * 
+ * @author trey miller
+ * 
+ */
 public abstract class BaseScreen extends Group {
 
 	protected final UiApp app;
+
+	/** a table that covers the whole screen by default */
 	protected final Table mainTable = new Table();
+
+	/** the default padding of the mainTable */
 	public static float defaultPad;
 
 	public BaseScreen(UiApp app) {
@@ -20,6 +30,7 @@ public abstract class BaseScreen extends Group {
 		this.addActor(mainTable);
 	}
 
+	/** override if you want, good for if you keep your screens around instead of creating new ones each time */
 	public BaseScreen show() {
 		return this;
 	}
@@ -31,12 +42,15 @@ public abstract class BaseScreen extends Group {
 		addAction(action);
 	}
 
+	/** what happens when the back button is pressed on Android */
 	public abstract void onBackPress();
 
+	/** default ad width from admob */
 	public static int getAdPxW() {
 		return (int) (320f * Gdx.graphics.getDensity());
 	}
 
+	/** default ad height from admob */
 	public static int getAdPxH() {
 		return (int) (50f * Gdx.graphics.getDensity());
 	}

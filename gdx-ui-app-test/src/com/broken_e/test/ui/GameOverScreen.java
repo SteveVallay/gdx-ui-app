@@ -7,7 +7,13 @@ import com.broken_e.test.ui.game.Stats;
 import com.broken_e.ui.BaseScreen;
 import com.broken_e.ui.UiApp;
 
-public class GameOverScreen extends BaseScreen{
+/**
+ * the final screen shown after the game is over, obviously.
+ * 
+ * @author trey miller
+ * 
+ */
+public class GameOverScreen extends BaseScreen {
 
 	public GameOverScreen(final UiApp app, Stats stats) {
 		super(app);
@@ -17,10 +23,9 @@ public class GameOverScreen extends BaseScreen{
 		mainTable.add("Game Over!");
 		mainTable.row();
 		mainTable.add("Points: " + stats.getPoints()).padBottom(100f);
-		
-		
-		mainTable.addListener(new ClickListener(){
-			public void clicked (InputEvent event, float x, float y) {
+
+		mainTable.addListener(new ClickListener() {
+			public void clicked(InputEvent event, float x, float y) {
 				app.switchScreens(new MainScreen(app));
 			}
 		});

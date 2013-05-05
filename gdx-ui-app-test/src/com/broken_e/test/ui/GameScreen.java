@@ -8,31 +8,37 @@ import com.broken_e.test.ui.game.Stats;
 import com.broken_e.ui.BaseScreen;
 import com.broken_e.ui.UiApp;
 
+/**
+ * the screen that holds the GameRoot group and shows the HUD
+ * 
+ * @author trey miller
+ * 
+ */
 public class GameScreen extends BaseScreen {
 
 	private Label lblPoints;
 	private Label lblStrikes;
-	
+
 	public GameScreen(UiApp app) {
 		super(app);
 		mainTable.setBackground(app.skin.getDrawable("window1"));
 		mainTable.setColor(app.skin.getColor("lt-green"));
 		mainTable.addActor(new GameRoot(this, app.atlas).init());
-		
+
 		Label lblPointText = new Label("Points: ", app.skin);
 		lblPointText.setTouchable(Touchable.disabled);
 		lblPoints = new Label("0", app.skin);
 		lblPoints.setTouchable(Touchable.disabled);
-		
+
 		lblStrikes = new Label("", app.skin);
-		
+
 		mainTable.row().left().top();
 		mainTable.add(lblPointText);
 		mainTable.add(lblPoints).expandX().fill();
 		mainTable.add(lblStrikes);
 		mainTable.row();
 		mainTable.add().expand().fill().colspan(3);
-//		mainTable.debug();
+		// mainTable.debug();
 	}
 
 	@Override
@@ -50,7 +56,7 @@ public class GameScreen extends BaseScreen {
 
 	public void gameOver(Stats stats) {
 		app.switchScreens(new GameOverScreen(app, stats));
-		
+
 	}
 
 }
