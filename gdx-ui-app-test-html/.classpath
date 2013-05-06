@@ -6,5 +6,6 @@
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry combineaccessrules="false" exported="true" kind="src" path="/gdx-backends-gwt"/>
 	<classpathentry combineaccessrules="false" exported="true" kind="src" path="/gdx-ui-app"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/gdx"/>
 	<classpathentry kind="output" path="war/WEB-INF/classes"/>
 </classpath>
