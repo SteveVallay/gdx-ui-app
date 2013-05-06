@@ -34,7 +34,7 @@ public class Mob extends Actor {
 		});
 	}
 
-	/** resets the mob for poolability */
+	/** resets the mob instead of the constructor, for poolability */
 	public Mob init(TextureRegion region, float speed) {
 		this.speed = speed;
 		accum = 0;
@@ -65,6 +65,10 @@ public class Mob extends Actor {
 		float x = MathUtils.random(px, p.getWidth() - px - getWidth());
 		float y = MathUtils.random(py, p.getHeight() - py - getHeight());
 		addAction(Actions.sequence(Actions.moveTo(x, y, 2f), Actions.run(moveToRunnable)));
+		if (x > getX() && !sprite.isFlipX())
+			sprite.flip(true, false);
+		else if (x < getX() && sprite.isFlipX())
+			sprite.flip(true, false);
 	}
 
 	private Runnable moveToRunnable = new Runnable() {

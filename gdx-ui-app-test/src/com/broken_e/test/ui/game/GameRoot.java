@@ -104,7 +104,7 @@ public class GameRoot extends Group {
 			accum = 0;
 			if (end > .3f)
 				end -= .01f;
-			addActor(mobPool.obtain().init(atlas.findRegion("white-pixel"), end * 10f));
+			addActor(mobPool.obtain().init(atlas.findRegion("face1"), end * 10f));
 		}
 		super.act(delta);
 	}
