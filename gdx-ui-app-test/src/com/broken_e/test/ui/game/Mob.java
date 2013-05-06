@@ -21,9 +21,9 @@ import com.badlogic.gdx.utils.Pool;
  */
 public class Mob extends Actor {
 
-	private Sprite sprite = new Sprite();
+	private final Sprite sprite = new Sprite();
 	private float speed;
-	float accum;
+	private float accum;
 
 	public Mob() {
 		addListener(new InputListener() {
@@ -78,7 +78,7 @@ public class Mob extends Actor {
 		}
 	};
 
-	private final float buf = .1f;
+	private static final float buf = .1f;
 
 	/** gives the mobs a bit of padding for click so if you click slightly outside the bounds it still works */
 	@Override

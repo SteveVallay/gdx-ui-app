@@ -21,9 +21,13 @@ public abstract class BaseScreen extends Group {
 
 	/** the default padding of the mainTable */
 	public static float defaultPad;
+	
+	/** the duration of the screen transition for the screenOut method */
+	public float dur;
 
 	public BaseScreen(UiApp app) {
 		this.app = app;
+		this.dur = app.defaultDur;
 		defaultPad = Math.round(Math.max(app.h, app.w) * .02f);
 		mainTable.defaults().pad(defaultPad);
 		mainTable.size(app.w, app.h);
@@ -38,7 +42,7 @@ public abstract class BaseScreen extends Group {
 	/** override for custom screen transitions, otherwise current screen just slides to the left */
 	protected void screenOut() {
 		float xPos = -app.w;
-		MoveToAction action = Actions.moveTo(xPos, 0f, app.dur);
+		MoveToAction action = Actions.moveTo(xPos, 0f, dur);
 		addAction(action);
 	}
 

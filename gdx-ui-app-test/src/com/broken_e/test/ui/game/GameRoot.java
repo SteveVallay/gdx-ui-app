@@ -17,29 +17,27 @@ import com.broken_e.test.ui.game.Mob.MobExplodeEvent;
 import com.broken_e.test.ui.game.Mob.MobTouchedEvent;
 
 /**
- * the root group added to the GameScreen that includes all the game objects.  It has its own coordinate system
- * that is different than the stage.  This requires modifying the drawn coordinate system and the input system.
- * See the overridden methods draw and hit.
+ * the root group added to the GameScreen that includes all the game objects. It has its own coordinate system that is
+ * different than the stage. This requires modifying the drawn coordinate system and the input system. See the
+ * overridden methods draw and hit.
  * 
  * @author trey miller
- * 
  */
 public class GameRoot extends Group {
 
-	private GameScreen screen;
-//	private TextureAtlas atlas;
-	private AtlasRegion faceRegion;
+	private final GameScreen screen;
+	private final AtlasRegion faceRegion;
 	/** the game is in a different coordinate system than the screen ui */
-	private OrthographicCamera cam = new OrthographicCamera();
+	private final OrthographicCamera cam = new OrthographicCamera();
 	private float screenW = Gdx.graphics.getWidth();
 	private float screenH = Gdx.graphics.getHeight();
 	/** temp Vector3 for camera unprojecting in hit */
-	private Vector3 v3 = new Vector3();
+	private final Vector3 v3 = new Vector3();
 	/** temp Matrix4 for storing the batch matrix and resetting batch after drawing GameRoot */
-	private Matrix4 tmpMatrix4 = new Matrix4();
+	private final Matrix4 tmpMatrix4 = new Matrix4();
 
-	public Stats stats = new Stats();
-	boolean gameOver;
+	public final Stats stats = new Stats();
+	private boolean gameOver;
 
 	public GameRoot(GameScreen screen, TextureAtlas atlas) {
 		this.screen = screen;

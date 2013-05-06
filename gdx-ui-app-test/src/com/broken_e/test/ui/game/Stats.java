@@ -5,17 +5,12 @@ import com.broken_e.utils.KeyValue;
 
 public class Stats {
 
-	public KeyValue<String> keyValue = new KeyValue<String>();
+	public final KeyValue<String> keyValue = new KeyValue<String>();
 
 	static public final String strPOINTS = "Points";
 	static public final String strSTRIKES = "Strikes";
 
 	private final StringBuilder tmpSB = new StringBuilder();
-
-	public Stats() {
-		// if (!keyValue.containsKey(strPOINTS, false))
-		// keyValue.put(strPOINTS, 0);
-	}
 
 	public void pointUp() {
 		keyValue.addToValue(strPOINTS, 1);
@@ -27,7 +22,6 @@ public class Stats {
 		tmpSB.append(keyValue.getValue(strPOINTS));
 		return tmpSB;
 	}
-
 
 	public StringBuilder mobExploded() {
 		keyValue.addToValue(strSTRIKES, 1);

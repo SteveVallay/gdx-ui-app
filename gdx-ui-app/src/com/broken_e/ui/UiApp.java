@@ -33,7 +33,7 @@ public abstract class UiApp implements ApplicationListener {
 	private BaseScreen currentScreen, nextScreen;
 
 	/** the duration of the screen transitions */
-	protected float dur = .333f;
+	public float defaultDur = .333f;
 	private float durAccum = -420f;
 
 	/** the color of glClearColor */
@@ -110,7 +110,7 @@ public abstract class UiApp implements ApplicationListener {
 
 	/** like Game#setScreen(Screen) but includes a screen transition */
 	public void switchScreens(BaseScreen screen) {
-		durAccum = dur;
+		durAccum = currentScreen.dur;
 		nextScreen = screen;
 		nextScreen.setTouchable(Touchable.disabled);
 		nextScreen.show();

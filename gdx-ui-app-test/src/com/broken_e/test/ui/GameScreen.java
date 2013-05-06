@@ -31,6 +31,7 @@ public class GameScreen extends BaseScreen {
 		lblPoints.setTouchable(Touchable.disabled);
 
 		lblStrikes = new Label("", app.skin);
+		lblStrikes.setTouchable(Touchable.disabled);
 
 		mainTable.row().left().top();
 		mainTable.add(lblPointText);
