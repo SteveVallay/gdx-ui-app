@@ -39,6 +39,7 @@ public class GameRoot extends Group {
 	private Matrix4 tmpMatrix4 = new Matrix4();
 
 	public Stats stats = new Stats();
+	boolean gameOver;
 
 	public GameRoot(GameScreen screen, TextureAtlas atlas) {
 		this.screen = screen;
@@ -65,17 +66,19 @@ public class GameRoot extends Group {
 					mob.remove();
 					mobPool.free(mob);
 					screen.mobExploded(stats.mobExploded());
-					if (stats.getStrikes() >= 5)
+					if (stats.getStrikes() >= 5 && !gameOver)
 						gameOver();
 				}
 				return false;
 			}
 		});
 		stats.reset();
+		gameOver = false;
 		return this;
 	}
 
 	private void gameOver() {
+		gameOver = true;
 		screen.gameOver(stats);
 	}
 
