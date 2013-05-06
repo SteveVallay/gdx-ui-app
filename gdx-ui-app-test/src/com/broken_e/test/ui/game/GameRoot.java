@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasRegion;
 import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.Actor;
@@ -26,7 +27,8 @@ import com.broken_e.test.ui.game.Mob.MobTouchedEvent;
 public class GameRoot extends Group {
 
 	private GameScreen screen;
-	private TextureAtlas atlas;
+//	private TextureAtlas atlas;
+	private AtlasRegion faceRegion;
 	/** the game is in a different coordinate system than the screen ui */
 	private OrthographicCamera cam = new OrthographicCamera();
 	private float screenW = Gdx.graphics.getWidth();
@@ -40,7 +42,7 @@ public class GameRoot extends Group {
 
 	public GameRoot(GameScreen screen, TextureAtlas atlas) {
 		this.screen = screen;
-		this.atlas = atlas;
+		this.faceRegion = atlas.findRegion("face1");
 	}
 
 	/** used because actors usually need to run the full constructor before adding things to them */
@@ -104,7 +106,7 @@ public class GameRoot extends Group {
 			accum = 0;
 			if (end > .3f)
 				end -= .01f;
-			addActor(mobPool.obtain().init(atlas.findRegion("face1"), end * 10f));
+			addActor(mobPool.obtain().init(faceRegion, end * 10f));
 		}
 		super.act(delta);
 	}

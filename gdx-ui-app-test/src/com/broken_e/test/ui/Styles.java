@@ -44,7 +44,5 @@ public class Styles implements SkinStyler {
 		tbs.pressedOffsetX = Math.round(1f * Gdx.graphics.getDensity());
 		tbs.pressedOffsetY = tbs.pressedOffsetX * -1f;
 		skin.add("default", tbs);
-
 	}
-
 }
