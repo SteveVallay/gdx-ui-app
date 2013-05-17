@@ -93,6 +93,8 @@
 		</fileset> -->
 		
 	</target>
-	
-	<target name="all" depends="fetch,copy"/>
+	<target name="delete">
+		<delete dir="tmp"/>
+	</target>
+	<target name="all" depends="fetch,copy,delete"/>
 </project>
