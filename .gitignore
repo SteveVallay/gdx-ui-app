@@ -20,6 +20,7 @@ local.properties
 *~
 .*.swp
 .DS_STORE
+com.broken_e.test.ui.GwtDefinition/
 
 bin/
 target/
@@ -27,6 +28,8 @@ obj/
 .gwt/
 gwt-unitCache/
 war/
+war/deploy/
+war/assets/
 gen/
 armeabi/
 armeabi-v7a/

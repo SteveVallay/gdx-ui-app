@@ -3,7 +3,7 @@
 
 <module>
     <source path="com/broken_e/test/ui">
-        <include name="**/*"/>
+<!--         <include name="**/*"/> -->
     </source>
 	
 </module>
