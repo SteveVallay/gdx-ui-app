@@ -23,7 +23,10 @@ public class GameOverScreen extends BaseScreen {
 		mainTable.setSkin(app.skin);
 		mainTable.add("Game Over!");
 		mainTable.row();
-		mainTable.add("Points: " + stats.getPoints()).padBottom(100f);
+		mainTable.add("Points: " + stats.getPoints());
+		mainTable.row();
+		mainTable.add("Top Score: " + stats.getTopScore()).padBottom(100f);
+		
 
 		mainTable.addListener(new ClickListener() {
 			public void clicked(InputEvent event, float x, float y) {

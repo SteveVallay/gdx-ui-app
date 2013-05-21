@@ -1,5 +1,7 @@
 package com.broken_e.test.ui.game;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.utils.StringBuilder;
 import com.broken_e.utils.KeyValue;
 
@@ -11,9 +13,12 @@ public class Stats {
 	static public final String strSTRIKES = "Strikes";
 
 	private final StringBuilder tmpSB = new StringBuilder();
+	private final Preferences prefs = Gdx.app.getPreferences("prefs");
 
 	public void pointUp() {
-		keyValue.addToValue(strPOINTS, 1);
+		int v = keyValue.addToValue(strPOINTS, 1);
+		if (prefs.getInteger(strPOINTS) < v)
+			prefs.putInteger(strPOINTS, v);
 	}
 
 	/** not safe to continue using the returned StringBuilder */
@@ -41,4 +46,7 @@ public class Stats {
 		return keyValue.getValue(strSTRIKES);
 	}
 
+	public int getTopScore(){
+		return prefs.getInteger(strPOINTS);
+	}
 }

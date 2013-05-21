@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Event;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -60,15 +61,21 @@ public class Mob extends Actor {
 
 	private void newMoveTo() {
 		Actor p = getParent();
-		float px = p.getX();
-		float py = p.getY();
-		float x = MathUtils.random(px, p.getWidth() - px - getWidth());
-		float y = MathUtils.random(py, p.getHeight() - py - getHeight());
-		addAction(Actions.sequence(Actions.moveTo(x, y, 2f), Actions.run(moveToRunnable)));
-		if (x > getX() && !sprite.isFlipX())
-			sprite.flip(true, false);
-		else if (x < getX() && sprite.isFlipX())
-			sprite.flip(true, false);
+		Action moveAction;
+		if (p == null) {
+			moveAction = Actions.delay(.5f);
+		} else {
+			float px = p.getX();
+			float py = p.getY();
+			float x = MathUtils.random(px, p.getWidth() - px - getWidth());
+			float y = MathUtils.random(py, p.getHeight() - py - getHeight());
+			moveAction = Actions.moveTo(x, y, 2f);
+			if (x > getX() && !sprite.isFlipX())
+				sprite.flip(true, false);
+			else if (x < getX() && sprite.isFlipX())
+				sprite.flip(true, false);
+		}
+		addAction(Actions.sequence(moveAction, Actions.run(moveToRunnable)));
 	}
 
 	private Runnable moveToRunnable = new Runnable() {
