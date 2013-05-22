@@ -77,6 +77,7 @@ public class GameRoot extends Group {
 
 	private void gameOver() {
 		gameOver = true;
+		stats.save();
 		screen.gameOver(stats);
 	}
 

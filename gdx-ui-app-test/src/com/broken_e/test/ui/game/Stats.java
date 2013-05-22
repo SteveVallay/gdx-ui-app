@@ -16,9 +16,7 @@ public class Stats {
 	private final Preferences prefs = Gdx.app.getPreferences("prefs");
 
 	public void pointUp() {
-		int v = keyValue.addToValue(strPOINTS, 1);
-		if (prefs.getInteger(strPOINTS) < v)
-			prefs.putInteger(strPOINTS, v);
+		keyValue.addToValue(strPOINTS, 1);
 	}
 
 	/** not safe to continue using the returned StringBuilder */
@@ -46,7 +44,15 @@ public class Stats {
 		return keyValue.getValue(strSTRIKES);
 	}
 
-	public int getTopScore(){
+	public int getTopScore() {
 		return prefs.getInteger(strPOINTS);
+	}
+
+	public void save() {
+		int points = keyValue.getValue(strPOINTS);
+		if (prefs.getInteger(strPOINTS) < points) {
+			prefs.putInteger(strPOINTS, points);
+			prefs.flush();
+		}
 	}
 }
