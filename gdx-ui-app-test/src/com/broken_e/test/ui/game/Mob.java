@@ -7,12 +7,13 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.Event;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
-import com.badlogic.gdx.utils.Pool;
+import com.badlogic.gdx.utils.Pools;
+import com.broken_e.test.ui.game.MobRemoveEvent.MobExplodeEvent;
+import com.broken_e.test.ui.game.MobRemoveEvent.MobTouchedEvent;
 
 /**
  * the main (only) game object
@@ -25,11 +26,15 @@ public class Mob extends Actor {
 	private final Sprite sprite = new Sprite();
 	private float speed;
 	private float accum;
+	private boolean isRemoving = false;
 
 	public Mob() {
 		addListener(new InputListener() {
 			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-				Mob.this.fire(mobTouchedEventPool.obtain());
+				if (!isRemoving) {
+					Mob.this.fire(Pools.obtain(MobTouchedEvent.class));
+					isRemoving = true;
+				}
 				return false;
 			}
 		});
@@ -39,8 +44,12 @@ public class Mob extends Actor {
 	public Mob init(TextureRegion region, float speed) {
 		this.speed = speed;
 		accum = 0;
+		isRemoving = false;
 		sprite.setRegion(region);
 		setBounds(MathUtils.random(16f), MathUtils.random(12f), 1.2f, 1.2f);
+		setScale(1f);
+		setRotation(0f);
+		setOrigin(getWidth() * .5f, getHeight() * .5f);
 		setColor(Color.WHITE);
 		clearActions();
 		return this;
@@ -54,8 +63,10 @@ public class Mob extends Actor {
 			newMoveTo();
 		}
 		accum += delta;
-		if (accum > speed)
-			fire(mobExplodeEventPool.obtain());
+		if (accum > speed && !isRemoving) {
+			fire(Pools.obtain(MobExplodeEvent.class));
+			isRemoving = true;
+		}
 		super.act(delta);
 	}
 
@@ -105,28 +116,4 @@ public class Mob extends Actor {
 		sprite.setBounds(getX(), getY(), getWidth(), getHeight());
 		sprite.draw(batch);
 	}
-
-	/** dummy class for specifying the type of event being a mob touched */
-	public static class MobTouchedEvent extends Event {
-	}
-
-	/** pool for the MobTouchedEvent */
-	private static Pool<MobTouchedEvent> mobTouchedEventPool = new Pool<MobTouchedEvent>() {
-		@Override
-		protected MobTouchedEvent newObject() {
-			return new MobTouchedEvent();
-		}
-	};
-
-	/** dummy class for specifying the type of event being a mob exploded */
-	public static class MobExplodeEvent extends Event {
-	}
-
-	/** pool for the MobExplodeEvent */
-	private static Pool<MobExplodeEvent> mobExplodeEventPool = new Pool<MobExplodeEvent>() {
-		@Override
-		protected MobExplodeEvent newObject() {
-			return new MobExplodeEvent();
-		}
-	};
 }

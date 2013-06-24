@@ -5,5 +5,5 @@
     <source path="com/broken_e/test/ui">
 <!--         <include name="**/*"/> -->
     </source>
-	
+	<extend-configuration-property name="gdx.reflect.include" value="com.broken_e.test.ui.game" />
 </module>

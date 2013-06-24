@@ -11,10 +11,10 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Event;
 import com.badlogic.gdx.scenes.scene2d.EventListener;
 import com.badlogic.gdx.scenes.scene2d.Group;
-import com.badlogic.gdx.utils.Pool;
+import com.badlogic.gdx.utils.Pools;
 import com.broken_e.test.ui.GameScreen;
-import com.broken_e.test.ui.game.Mob.MobExplodeEvent;
-import com.broken_e.test.ui.game.Mob.MobTouchedEvent;
+import com.broken_e.test.ui.game.MobRemoveEvent.MobExplodeEvent;
+import com.broken_e.test.ui.game.MobRemoveEvent.MobTouchedEvent;
 
 /**
  * the root group added to the GameScreen that includes all the game objects. It has its own coordinate system that is
@@ -53,19 +53,16 @@ public class GameRoot extends Group {
 		this.addListener(new EventListener() {
 			@Override
 			public boolean handle(Event event) {
-				if (event instanceof MobTouchedEvent) {
-					Mob mob = (Mob) event.getTarget();
-					mob.remove();
-					mobPool.free(mob);
-					stats.pointUp();
-					screen.pointsChanged(stats.getPoints());
-				} else if (event instanceof MobExplodeEvent) {
-					Mob mob = (Mob) event.getTarget();
-					mob.remove();
-					mobPool.free(mob);
-					screen.mobExploded(stats.mobExploded());
-					if (stats.getStrikes() >= 5 && !gameOver)
-						gameOver();
+				if (event instanceof MobRemoveEvent) {
+					((MobRemoveEvent) event).removeMob();
+					if (event instanceof MobTouchedEvent) {
+						stats.pointUp();
+						screen.pointsChanged(stats.getPoints());
+					} else if (event instanceof MobExplodeEvent) {
+						screen.mobExploded(stats.mobExploded());
+						if (stats.getStrikes() >= 5 && !gameOver)
+							gameOver();
+					}
 				}
 				return false;
 			}
@@ -108,7 +105,7 @@ public class GameRoot extends Group {
 			accum = 0;
 			if (end > .3f)
 				end -= .01f;
-			addActor(mobPool.obtain().init(faceRegion, end * 10f));
+			addActor(Pools.obtain(Mob.class).init(faceRegion, end * 10f));
 		}
 		super.act(delta);
 	}
@@ -117,11 +114,4 @@ public class GameRoot extends Group {
 		return totalTime;
 	}
 
-	private Pool<Mob> mobPool = new Pool<Mob>() {
-		@Override
-		protected Mob newObject() {
-			return new Mob();
-		}
-
-	};
 }
