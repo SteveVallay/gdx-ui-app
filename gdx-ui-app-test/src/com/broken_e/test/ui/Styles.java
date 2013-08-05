@@ -10,14 +10,12 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
-import com.broken_e.ui.SkinStyler;
 
 /**
  * @author trey miller
  */
-public class Styles implements SkinStyler {
+public class Styles {
 
-	@Override
 	public void styleSkin(Skin skin, TextureAtlas atlas) {
 		BitmapFont font = new BitmapFont(Gdx.files.internal("data/lucida-console-21.fnt"), false);
 		skin.add("default", font);

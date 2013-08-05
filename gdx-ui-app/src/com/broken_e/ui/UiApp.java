@@ -51,9 +51,7 @@ public abstract class UiApp implements ApplicationListener {
 		String skinPath = skinPath();
 		if (skinPath != null)
 			skin.load(Gdx.files.internal(skinPath));
-		SkinStyler skinStyler = getSkinStyler();
-		if (skinStyler != null)
-			skinStyler.styleSkin(skin, atlas);
+		styleSkin(skin, atlas);
 
 		Gdx.input.setInputProcessor(stage);
 		Gdx.input.setCatchBackKey(true);
@@ -78,7 +76,7 @@ public abstract class UiApp implements ApplicationListener {
 	protected abstract String skinPath();
 
 	/** add the skin styles here (optional, can be null) */
-	protected abstract SkinStyler getSkinStyler();
+	protected abstract void styleSkin(Skin skin, TextureAtlas atlas);
 
 	/** specify the screen to be loaded at the beginning */
 	protected abstract BaseScreen getFirstScreen();

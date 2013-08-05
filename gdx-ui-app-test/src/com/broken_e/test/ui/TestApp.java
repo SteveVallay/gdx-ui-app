@@ -1,7 +1,8 @@
 package com.broken_e.test.ui;
 
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.broken_e.ui.BaseScreen;
-import com.broken_e.ui.SkinStyler;
 import com.broken_e.ui.UiApp;
 
 /**
@@ -20,14 +21,15 @@ public class TestApp extends UiApp {
 	protected String skinPath() {
 		return null;
 	}
-
 	@Override
-	protected SkinStyler getSkinStyler() {
-		return new Styles();
+	protected void styleSkin(Skin skin, TextureAtlas atlas) {
+		new Styles().styleSkin(skin, atlas);
 	}
 
 	@Override
 	protected BaseScreen getFirstScreen() {
 		return new MainScreen(this);
 	}
+
+
 }
