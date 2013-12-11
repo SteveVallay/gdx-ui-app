@@ -1,6 +1,8 @@
 package com.broken_e.test.ui.game;
 
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -24,9 +26,11 @@ import com.broken_e.test.ui.game.MobRemoveEvent.MobTouchedEvent;
 public class Mob extends Actor {
 
 	private final Sprite sprite = new Sprite();
+	private Animation animation;
 	private float speed;
 	private float accum;
 	private boolean isRemoving = false;
+	private boolean flip;
 
 	public Mob() {
 		addListener(new InputListener() {
@@ -41,12 +45,13 @@ public class Mob extends Actor {
 	}
 
 	/** resets the mob instead of the constructor, for poolability */
-	public Mob init(TextureRegion region, float speed) {
+	public Mob init(Animation anim, float speed) {
+		this.animation = anim;
 		this.speed = speed;
 		accum = 0;
 		isRemoving = false;
-		sprite.setRegion(region);
-		setBounds(MathUtils.random(16f), MathUtils.random(12f), 1.2f, 1.2f);
+		//sprite.setRegion(anim.getKeyFrame(0f));
+		setBounds(MathUtils.random(16f), MathUtils.random(12f), 1.4f, 1.2f);
 		setScale(1f);
 		setRotation(0f);
 		setOrigin(getWidth() * .5f, getHeight() * .5f);
@@ -63,6 +68,7 @@ public class Mob extends Actor {
 			newMoveTo();
 		}
 		accum += delta;
+		stateTime += delta;
 		if (accum > speed && !isRemoving) {
 			fire(Pools.obtain(MobExplodeEvent.class));
 			isRemoving = true;
@@ -81,10 +87,10 @@ public class Mob extends Actor {
 			float x = MathUtils.random(px, p.getWidth() - px - getWidth());
 			float y = MathUtils.random(py, p.getHeight() - py - getHeight());
 			moveAction = Actions.moveTo(x, y, 2f);
-			if (x > getX() && !sprite.isFlipX())
-				sprite.flip(true, false);
-			else if (x < getX() && sprite.isFlipX())
-				sprite.flip(true, false);
+			if (x > getX())
+				flip = false;
+			else if (x < getX())
+				flip = true;
 		}
 		addAction(Actions.sequence(moveAction, Actions.run(moveToRunnable)));
 	}
@@ -105,15 +111,22 @@ public class Mob extends Actor {
 			return null;
 		return x >= -buf && x < getWidth() + buf && y >= -buf && y < getHeight() + buf ? this : null;
 	}
+	
+	private float stateTime;
 
 	/** just sets the sprite to this actor's stuff and then draws it */
-	public void draw(SpriteBatch batch, float parentAlpha) {
+	@Override
+	public void draw(Batch batch, float parentAlpha) {
 		Color color = getColor();
+		sprite.setRegion(animation.getKeyFrame(stateTime));
+		if (sprite.isFlipX() != flip)
+			sprite.flip(true, false);
 		sprite.setColor(color.r, color.g, color.b, color.a * parentAlpha);
 		sprite.setScale(getScaleX(), getScaleY());
 		sprite.setRotation(getRotation());
 		sprite.setOrigin(getOriginX(), getOriginY());
 		sprite.setBounds(getX(), getY(), getWidth(), getHeight());
 		sprite.draw(batch);
+		//batch.draw(animation.getKeyFrame(0), 0,0,10,10);
 	}
 }

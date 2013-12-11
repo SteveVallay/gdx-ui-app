@@ -2,6 +2,8 @@ package com.broken_e.test.ui.game;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasRegion;
@@ -11,6 +13,7 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Event;
 import com.badlogic.gdx.scenes.scene2d.EventListener;
 import com.badlogic.gdx.scenes.scene2d.Group;
+import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Pools;
 import com.broken_e.test.ui.GameScreen;
 import com.broken_e.test.ui.game.MobRemoveEvent.MobExplodeEvent;
@@ -26,7 +29,7 @@ import com.broken_e.test.ui.game.MobRemoveEvent.MobTouchedEvent;
 public class GameRoot extends Group {
 
 	private final GameScreen screen;
-	private final AtlasRegion faceRegion;
+	private final Array<AtlasRegion> regions;
 	/** the game is in a different coordinate system than the screen ui */
 	private final OrthographicCamera cam = new OrthographicCamera();
 	private float screenW = Gdx.graphics.getWidth();
@@ -41,7 +44,8 @@ public class GameRoot extends Group {
 
 	public GameRoot(GameScreen screen, TextureAtlas atlas) {
 		this.screen = screen;
-		this.faceRegion = atlas.findRegion("face1");
+		regions = atlas.findRegions("glitch-gnome");
+		Gdx.app.log("regions", "" + regions.size);
 	}
 
 	/** used because actors usually need to run the full constructor before adding things to them */
@@ -88,7 +92,7 @@ public class GameRoot extends Group {
 
 	/** sets batch to game units to draw and then back to screen */
 	@Override
-	public void draw(SpriteBatch batch, float parentAlpha) {
+	public void draw(Batch batch, float parentAlpha) {
 		tmpMatrix4.set(batch.getProjectionMatrix());
 		batch.setProjectionMatrix(cam.combined);
 		super.draw(batch, parentAlpha);
@@ -105,7 +109,10 @@ public class GameRoot extends Group {
 			accum = 0;
 			if (end > .3f)
 				end -= .01f;
-			addActor(Pools.obtain(Mob.class).init(faceRegion, end * 10f));
+			
+			Animation anim = new Animation(.03f, regions);
+			anim.setPlayMode(Animation.LOOP);
+			addActor(Pools.obtain(Mob.class).init(anim, end * 10f));
 		}
 		super.act(delta);
 	}
